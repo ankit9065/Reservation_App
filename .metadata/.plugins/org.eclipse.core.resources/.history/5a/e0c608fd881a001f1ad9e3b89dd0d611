@@ -1,0 +1,15 @@
+package org.jsp.reservation_app.repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import org.jsp.reservation_app.model.Bus;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface BusRepository extends JpaRepository<Bus, Integer> {
+	
+	List<Bus> findByBusNo(String bus_No);
+	
+	List<Bus> findByFromLocationToLocation(String from_Location, String to_Location);
+	
+	List<Bus> findByDateOfDeparture(LocalDateTime date_Of_Departure);
+}

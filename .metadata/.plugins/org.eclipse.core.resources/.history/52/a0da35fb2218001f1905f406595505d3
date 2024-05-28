@@ -1,0 +1,14 @@
+package org.jsp.reservation_app.service;
+
+import org.jsp.reservation_app.dao.AdminDao;
+import org.jsp.reservation_app.model.Admin;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+@Service
+public class AdminService {
+	@Autowired
+	private AdminDao adminDao;
+	
+}

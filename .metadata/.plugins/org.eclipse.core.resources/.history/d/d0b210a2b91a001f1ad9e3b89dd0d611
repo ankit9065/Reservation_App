@@ -1,0 +1,88 @@
+package org.jsp.reservation_app.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.jsp.reservation_app.dao.BusDao;
+import org.jsp.reservation_app.dto.BusRequest;
+import org.jsp.reservation_app.dto.ResponseStructure;
+import org.jsp.reservation_app.exception.BusNotFoundException;
+import org.jsp.reservation_app.exception.UserNotFoundException;
+import org.jsp.reservation_app.model.Bus;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BusService {
+	@Autowired
+	private BusDao busDao;
+
+	public ResponseEntity<ResponseStructure<Bus>> saveBus(BusRequest busRequest) {
+		ResponseStructure<Bus> structure = new ResponseStructure<>();
+
+		structure.setMessage("Bus details Successfully saved...");
+		structure.setData(busDao.saveBus(mapToBus(busRequest)));
+		structure.setStatusCode(HttpStatus.CREATED.value());
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(structure);
+	}
+	
+	public ResponseEntity<ResponseStructure<Bus>> update(BusRequest busRequest, int id){
+		ResponseStructure<Bus> structure = new ResponseStructure<>();
+		Optional<Bus> rec = busDao.findById(id);
+
+		if (rec.isPresent()) {
+
+			Bus dbBus = mapToBus(busRequest);
+			dbBus.setId(id);
+			
+			structure.setData(busDao.saveBus(dbBus));
+			structure.setMessage("Bus Details updated Successfully..!!");
+			structure.setStatusCode(HttpStatus.ACCEPTED.value());
+
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body(structure);
+		}
+		throw new UserNotFoundException("Cannot Update Bus as Id is Invalid");
+	}
+	
+	public ResponseEntity<ResponseStructure<Bus>> findById(int id){
+		ResponseStructure<Bus> structure = new ResponseStructure<>();
+		Optional<Bus> db = busDao.findById(id);
+		
+		if(db.isPresent()) {
+			
+			structure.setData(db.get());
+			structure.setMessage("Bus found by Id successfully...");
+			structure.setStatusCode(HttpStatus.OK.value());
+			
+			return ResponseEntity.status(HttpStatus.OK).body(structure);
+		}
+		
+		throw new BusNotFoundException("Invalid Bus Id");
+	}
+	
+	public ResponseEntity<ResponseStructure<Bus>> findByName(String name){
+		ResponseStructure<Bus> structure = new ResponseStructure<>();
+		Optional<Bus> db = busDao.findByName(name);
+		
+		if(db.isPresent()) {
+			
+			structure.setData(db.get());
+			structure.setMessage("Bus found by name successfully...");
+			structure.setStatusCode(HttpStatus.OK.value());
+			
+			return ResponseEntity.status(HttpStatus.OK).body(structure);
+		}
+		
+		throw new BusNotFoundException("Invalid Bus Name");
+		}
+	}
+
+	private Bus mapToBus(BusRequest busRequest) {
+		return Bus.builder().name(busRequest.getName()).bus_No(busRequest.getBus_No())
+				.date_Of_Departure(busRequest.getDate_Of_Departure()).from_Location(busRequest.getFrom_Location())
+				.to_Location(busRequest.getTo_Location()).no_Seats(busRequest.getNo_Seats()).build();
+	}
+}
