@@ -13,8 +13,12 @@
 }
 
 .adminLogin{
-    color: black;
+    background-image: url(https://img.freepik.com/free-vector/tropical-leaves-background-zoom_23-2148580778.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
     font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
     display: flex;
     justify-content: center;
     align-items: center;

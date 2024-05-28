@@ -10,16 +10,16 @@
 
 .landingPage{
     text-align: center;
-    left: 27%;
+    left: 30%;
     top: 25%;
     border-radius: 20px;
     display: flex;
     justify-content: space-around;
-    padding: 20px, 0px;
+    padding:40px ;
     position: absolute;
     align-items: center;
-    box-shadow: 0px, 0px, 12px grey;
-    width: 50%;
+    box-shadow: 0px 0px 20px grey;
+    width: 35%;
 }
 
 .landingPage a{
@@ -28,10 +28,6 @@
     font-size: 20px;
     color: crimson;
     font-family: cursive;
-}
-
-.landingPage h2{
-    position: relative;
 }
 
 .landingPage a:hover{

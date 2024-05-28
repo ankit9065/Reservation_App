@@ -1,0 +1,26 @@
+.userLogin form{
+    width: 600px;
+    display: grid;
+    grid-template-columns: 200px 300px;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: 0px 0px 20px white;
+    border-radius: 20px;
+}
+
+.userLogin input{
+    margin: 10px;
+}
+
+.userLogin{
+    background-image: url(https://c0.wallpaperflare.com/preview/789/637/166/backlit-chiemsee-dawn-desktop-backgrounds.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
