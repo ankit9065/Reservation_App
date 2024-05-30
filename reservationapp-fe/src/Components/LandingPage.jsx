@@ -1,6 +1,7 @@
 import React from 'react'
 import '../Styles/LandingPage.css'
 import { Link } from 'react-router-dom'
+
 const LandingPage = () => {
     return (
         <div className='landingPage'>
@@ -15,5 +16,4 @@ const LandingPage = () => {
         </div>
     )
 }
-
 export default LandingPage

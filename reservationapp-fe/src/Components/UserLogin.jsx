@@ -1,24 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../Styles/UserLogin.css'
-import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom'
 
 const UserLogin = () => {
+
+  let [userName, setUserName] = useState("")
+  let [password, setPassword] = useState("")
+
+  function verify(){
+    if(userName == "suraj" && password == 1234){
+      alert("Login Successfull")
+    }
+    else{
+      alert("Login failed")
+    }
+  }
   return (
     <div className='userLogin'>
-      <form action="">
+      <form onSubmit={verify} action="">
         <label htmlFor="">
-            UserName
+            User_Name
         </label>
-        <input type="text" placeholder='Enter Username' />
+        <input type="text" value={userName} onChange={(e)=>{setUserName(e.target.value)}} placeholder='Enter User_Name' />
 
         <label htmlFor="">
             Password
         </label>
-        <input type="text" placeholder='Enter password' />
+        <input type="text" value={password} onChange={(e)=>{setPassword(e.target.value)}} placeholder='Enter Password' />
 
-        {/* <button className='btn-btn-primary'>Login</button> */}
-        <Button variant="outline-light">Login</Button>
+        <button>Login</button>
+        <p>New User? <Link to="/userSignUp">SignUp</Link> here...</p>
+        <p><Link to="/">Back</Link></p>
       </form>
+      
     </div>
   )
 }

@@ -1,8 +1,0 @@
-package org.jsp.reservation_app.repository;
-
-import org.jsp.reservation_app.model.Admin;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface AdminRepository extends JpaRepository<Admin, Integer> {
-
-}

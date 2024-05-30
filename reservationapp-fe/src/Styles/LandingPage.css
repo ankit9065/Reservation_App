@@ -1,35 +1,37 @@
-.landingPage img:first-child{
-    height: 150px;
-    width: 170px; 
-}
-
-.landingPage :last-child img {
-    height: 150px;
-    width: 170px;
-}
-
-.landingPage{
-    text-align: center;
-    left: 30%;
-    top: 25%;
-    border-radius: 20px;
+.landingPage {
     display: flex;
-    justify-content: space-around; 
-    padding:40px ;
-    position: absolute;
+    justify-content: center;
     align-items: center;
-    box-shadow: 0px 0px 20px grey;
-    width: 35%;
-}
-
-.landingPage a{
-    transition: 1s;
+    height: 100vh;
+    background: linear-gradient(145deg, #ff073a, #6610f2, #007bff);
+ }
+  
+  .landingPage a {
     text-decoration: none;
-    font-size: 20px;
-    color: crimson;
+    color: white;
     font-family: cursive;
-}
-
-.landingPage a:hover{
-    transform: scale(1.1);
-}
+    margin: 30px 40px;
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .landingPage a:hover {
+    transform: translateY(-5px);
+  }
+  
+  .landingPage img {
+    width: 150px;
+    height: 150px; 
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
+  
+  .landingPage img:hover {
+    transform: scale(1.2);
+  }
+  
+  .landingPage h2 {
+    margin-top: 35px;
+    font-size: 1.5rem;
+  }
+  

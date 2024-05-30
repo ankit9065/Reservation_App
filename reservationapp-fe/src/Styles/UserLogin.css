@@ -1,18 +1,4 @@
-.userLogin form{
-    width: 600px;
-    display: grid;
-    grid-template-columns: 200px 300px;
-    justify-content: center;
-    padding: 10px;
-    box-shadow: 0px 0px 20px white;
-    border-radius: 20px;
-}
-
-.userLogin input{
-    margin: 10px;
-}
-
-.userLogin{
+.userLogin {
     background-image: url(https://c0.wallpaperflare.com/preview/789/637/166/backlit-chiemsee-dawn-desktop-backgrounds.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -24,3 +10,46 @@
     align-items: center;
     height: 100vh;
 }
+
+.userLogin form {
+    width: 350px; 
+    display: grid;
+    grid-template-columns: 1fr; 
+    justify-content: center;
+    padding: 30px; 
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3); 
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.userLogin input {
+    margin: 15px 0; 
+    padding: 5px;
+    border: none; 
+    border-radius: 5px; 
+}
+
+.userLogin button {
+    width: 50%;
+    margin: 10px auto; 
+    padding: 5px; 
+    border: none; 
+    border-radius: 10px; 
+    background-color: white;
+    color: rgb(220, 31, 160); 
+    font-size: 20px; 
+    cursor: pointer; 
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+.userLogin button:hover {
+    background-color: rgb(220, 31, 160); 
+    color: white;
+}
+
+.userLogin a{
+    text-decoration: none;
+}
+
+
+

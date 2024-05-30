@@ -1,18 +1,4 @@
-.adminLogin form{
-    width: 600px;
-    display: grid;
-    grid-template-columns: 200px 300px;
-    justify-content: center;
-    padding: 10px;
-    box-shadow: 0px 0px 20px white;
-    border-radius: 20px;
-}
-
-.adminLogin input{
-    margin: 10px;
-}
-
-.adminLogin{
+.adminLogin {
     background-image: url(https://img.freepik.com/free-vector/tropical-leaves-background-zoom_23-2148580778.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -24,3 +10,44 @@
     align-items: center;
     height: 100vh;
 }
+
+.adminLogin form {
+    width: 350px; 
+    display: grid;
+    grid-template-columns: 1fr; 
+    justify-content: center;
+    padding: 30px; 
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3); 
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+.adminLogin input {
+    margin: 15px 0; 
+    padding: 5px;
+    border: none; 
+    border-radius: 5px; 
+}
+
+.adminLogin button {
+    width: 50%;
+    margin: 10px auto; 
+    padding: 5px; 
+    border: none; 
+    border-radius: 10px; 
+    background-color: white;
+    color: rgb(24, 139, 177); 
+    font-size: 20px; 
+    cursor: pointer; 
+    transition: background-color 0.3s, color 0.3s; 
+}
+
+.adminLogin button:hover {
+    background-color: rgb(24, 139, 177); 
+    color: white;
+}
+
+.adminLogin a{
+    text-decoration: none;
+}
+
