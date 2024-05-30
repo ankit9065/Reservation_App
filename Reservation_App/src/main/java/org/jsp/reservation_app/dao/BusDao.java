@@ -1,7 +1,5 @@
 package org.jsp.reservation_app.dao;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import org.jsp.reservation_app.model.Bus;
 import org.jsp.reservation_app.repository.BusRepository;

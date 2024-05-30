@@ -1,0 +1,58 @@
+.userSignUp {
+    background: linear-gradient(to right, #ff8a00, #da1b60);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .userSignUp form {
+    background-color: white;
+    width: 400px; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+  }
+  
+  .userSignUp label {
+    display: block;
+    margin-bottom: 6px;
+    font-family: cursive;
+    font-size: 16px;
+  }
+  
+  .userSignUp input {
+    width: calc(100% - 22px); 
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .userSignUp button {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    background-color: #da1b60;
+    color: white;
+    cursor: pointer;
+    font-family: cursive;
+    font-size: 16px;
+  }
+  
+  .userSignUp button:hover {
+    background-color: #ff8a00;
+  }
+  
+  .userSignUp p {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .userSignUp p a {
+    color: #da1b60;
+    font-family: cursive;
+    font-size: 16px;
+  }
+  

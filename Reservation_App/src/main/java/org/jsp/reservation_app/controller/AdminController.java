@@ -1,11 +1,13 @@
 package org.jsp.reservation_app.controller;
 
 import org.jsp.reservation_app.dto.AdminRequest;
+
 import org.jsp.reservation_app.dto.AdminResponse;
 import org.jsp.reservation_app.dto.ResponseStructure;
 import org.jsp.reservation_app.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/admins")
 public class AdminController {
@@ -46,7 +49,7 @@ public class AdminController {
 		return adminService.verify(phone, password);
 	}
 
-	@GetMapping("/verify-by-email")
+	@PostMapping("/verify-by-email")
 	public ResponseEntity<ResponseStructure<AdminResponse>> verifyByEmail(@RequestParam String email,
 			@RequestParam String password) {
 		return adminService.verify(email, password);

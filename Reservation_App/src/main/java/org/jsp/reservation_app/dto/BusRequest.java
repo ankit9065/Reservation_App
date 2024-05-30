@@ -12,5 +12,6 @@ public class BusRequest {
 	private String from_Location;
 	private String to_Location;
 	private int no_Seats;
-	private Admin admin;
+	
+
 }

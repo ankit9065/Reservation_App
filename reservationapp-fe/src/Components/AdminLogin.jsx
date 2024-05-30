@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
 import '../Styles/AdminLogin.css'
-
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const AdminLogin = () => {
-  let [adminName, setAdminName] = useState("")
+  let [email, setAdminName] = useState("")
   let [password, setPassword] = useState("")
 
-  function verify(){
-    if(adminName == "ankit" && password == 1234){
-      alert("Login Successfull")
-    }
-    else{
-      alert("Login failed")
-    }
+  function verify(e){
+    e.preventDefault()
+    axios.post(`http://localhost:8080/api/admins/verify-by-email?email=${email}&password=${password}`)
+    .then((res)=>{
+      alert("Login Successfully")
+    })
+    .catch((err)=>{
+      alert("Login Failed")
+    })
   }
   return (
     <div className='adminLogin'>
@@ -21,7 +23,7 @@ const AdminLogin = () => {
         <label htmlFor="">
             Admin_Name
         </label>
-        <input type="text" value={adminName} onChange={(e)=>{setAdminName(e.target.value)}} placeholder='Enter Admin_Name' />
+        <input type="text" value={email} onChange={(e)=>{setAdminName(e.target.value)}} placeholder='Enter Admin_Name' />
 
         <label htmlFor="">
             Password

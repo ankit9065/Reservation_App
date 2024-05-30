@@ -1,8 +1,7 @@
 package org.jsp.reservation_app.dto;
 
-//import java.util.List;
-//import org.jsp.reservation_app.model.Bus;
-
+import java.util.List;
+import org.jsp.reservation_app.model.Bus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -13,7 +12,7 @@ public class AdminRequest {
 	@NotBlank(message = "Name is mandatory")
 	private String name;
 	@NotBlank(message = "GST No is mandatory")
-	@Size(min = 10, max = 15, message = "Gst No msut have 15 characters")
+	@Size(min = 7, max = 15, message = "Gst No msut have 7 min characters")
 	private String gst_no;
 	@NotBlank(message = "Travels name is mandatory")
 	private String travles_name;
@@ -21,7 +20,8 @@ public class AdminRequest {
 	@Email(message = "Invalid email formate")
 	private String email;
 	@NotBlank(message = "Password is mandatory")
+	@Size(min = 8, max = 15, message = "Password must have 8 min characters")
 	private String password;
 	
-//	private List<Bus> bus;
+	private List<Bus> bus;
 }
