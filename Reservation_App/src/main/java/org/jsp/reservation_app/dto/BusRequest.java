@@ -7,11 +7,10 @@ import lombok.Data;
 @Data
 public class BusRequest {
 	private String name;
-	private LocalDateTime date_Of_Departure;
-	private String bus_No;
-	private String from_Location;
-	private String to_Location;
-	private int no_Seats;
-	
-
+	private LocalDateTime dateofdeparture;
+	private String busNumber;
+	private String from;
+	private String to;
+	private int noOfSeats;
+	private Admin admin;
 }

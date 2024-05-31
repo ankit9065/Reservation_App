@@ -1,7 +1,6 @@
 package org.jsp.reservation_app.service;
 
 import java.util.Optional;
-
 import org.jsp.reservation_app.dao.AdminDao;
 import org.jsp.reservation_app.dto.AdminRequest;
 import org.jsp.reservation_app.dto.AdminResponse;
@@ -12,17 +11,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import jakarta.servlet.http.HttpServletRequest;
+import net.bytebuddy.utility.RandomString;
 
 @Service
 public class AdminService {
 	@Autowired
 	private AdminDao adminDao;
+	
+	@Autowired
+	private ReservationApiMailService mailService;
 
-	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest) {
+	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest, 
+			HttpServletRequest request) {
+		String siteUrl = request.getRequestURL().toString();
+		String path = request.getServletPath();
+		String activation_link = siteUrl.replaceAll(path, "/api/admins/activate	");
+		
 		ResponseStructure<AdminResponse> structure = new ResponseStructure<>();
-
-		structure.setMessage("Admin Successfully saved...!!");
-		Admin admin = adminDao.saveAdmin(mapToAdmin(adminRequest));
+		
+		String token = RandomString.make(45);
+		activation_link += "?token=" + token;
+		System.out.println(activation_link);
+		
+		Admin admin = mapToAdmin(adminRequest);
+		admin.setToken(token);
+		admin.setStatus("In_Active");
+		
+		adminDao.saveAdmin(admin);
+		
+		structure.setMessage(mailService.sendMail(admin.getEmail(), activation_link));
 		structure.setData(mapToAdminResponse(admin));
 		structure.setStatusCode(HttpStatus.CREATED.value());
 
@@ -133,4 +151,17 @@ public class AdminService {
 				.id(admin.getId()).phone(admin.getPhone()).password(admin.getPassword())
 				.travels_name(admin.getTravels_name()).build();
 	}
+	
+	public String activate(String token) {
+		Optional<Admin> rec = adminDao.findByToken(token);
+		
+		if(rec.isEmpty()) {
+			throw new AdminNotFoundException("Invalid token");
+		}
+		Admin db = rec.get();
+		db.setStatus("Activated");
+		db.setToken(null);
+		adminDao.saveAdmin(db);
+		return "Your Account has been activated";
+	}	
 }

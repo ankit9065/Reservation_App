@@ -15,4 +15,5 @@ public interface BusRepository extends JpaRepository<Bus, Integer> {
 //	List<Bus> findByFromLocationToLocation(String from_Location, String to_Location);
 //	
 //	List<Bus> findByDateOfDeparture(LocalDateTime date_Of_Departure);
+	
 }

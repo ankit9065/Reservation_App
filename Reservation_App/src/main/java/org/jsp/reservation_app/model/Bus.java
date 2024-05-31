@@ -22,26 +22,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class Bus {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@Column(nullable = false)
 	private String name;
-	@Column(nullable = false)
-	private LocalDateTime date_Of_Departure;
-	@Column(nullable = false)
-	private String bus_No;
-	@Column(nullable = false, name = "fromloc")
-	private String from_Loc;
-	@Column(nullable = false, name = "toloc")
-	private String to_Loc;
-	@Column(nullable = false)
-	private int no_Seats;
-
+	@Column(nullable = false, name = "date_Of_departure")
+	private LocalDateTime dateofdeparture;
+	@Column(nullable = false, name = "bus_number")
+	private String busNumber;
+	@Column(nullable = false, name = "from_location")
+	private String from;
+	@Column(nullable = false, name = "to_location")
+	private String to;
+	@Column(nullable = false, name = "number_of_seats")
+	private int noOfSeats;
 	@ManyToOne
 	@JoinColumn(name = "admin_id")
 	@JsonIgnore
 	private Admin admin;
-
 }

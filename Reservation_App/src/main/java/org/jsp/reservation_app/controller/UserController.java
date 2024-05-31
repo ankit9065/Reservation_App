@@ -33,7 +33,7 @@ public class UserController {
 		return userService.update(userRequest, id);
 	}
 
-	@GetMapping("{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<ResponseStructure<UserResponse>> findUser(@PathVariable int id) {
 		return userService.findById(id);
 	}

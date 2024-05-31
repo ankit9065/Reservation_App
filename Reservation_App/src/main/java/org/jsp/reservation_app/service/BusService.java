@@ -30,7 +30,7 @@ public class BusService {
 		if (rec.isPresent()) {
 			Admin admin = rec.get();
 			busRequest.setAdmin(admin);
-			admin.getBus().add(mapToBus(busRequest));
+			admin.getBuses().add(mapToBus(busRequest));
 
 			ResponseStructure<BusResponse> structure = new ResponseStructure<>();
 			structure.setData(mapToBusResponse(busDao.saveBus(mapToBus(busRequest))));
@@ -49,14 +49,15 @@ public class BusService {
 
 		if (rec.isPresent()) {
 			Bus dbBus = rec.get();
-			
-			dbBus.setBus_No(busRequest.getBus_No());
-			dbBus.setDate_Of_Departure(busRequest.getDate_Of_Departure());
-			dbBus.setFrom_Location(busRequest.getFrom_Location());
-			dbBus.setTo_Location(busRequest.getTo_Location());
+
+			dbBus.setBusNumber(busRequest.getBusNumber());
+			dbBus.setDateofdeparture(busRequest.getDateofdeparture());
+			dbBus.setFrom(busRequest.getFrom());
+			;
+			dbBus.setTo(busRequest.getTo());
 			dbBus.setName(busRequest.getName());
-			dbBus.setNo_Seats(busRequest.getNo_Seats());
-			
+			dbBus.setNoOfSeats(busRequest.getNoOfSeats());
+
 			structure.setData(mapToBusResponse(busDao.saveBus(dbBus)));
 			structure.setMessage("Bus Details updated Successfully..!!");
 			structure.setStatusCode(HttpStatus.ACCEPTED.value());
@@ -98,14 +99,14 @@ public class BusService {
 	}
 
 	private Bus mapToBus(BusRequest busRequest) {
-		return Bus.builder().name(busRequest.getName()).bus_No(busRequest.getBus_No())
-				.date_Of_Departure(busRequest.getDate_Of_Departure()).from_Location(busRequest.getFrom_Location())
-				.to_Location(busRequest.getTo_Location()).no_Seats(busRequest.getNo_Seats()).build();
+		return Bus.builder().name(busRequest.getName()).busNumber(busRequest.getBusNumber())
+				.dateofdeparture(busRequest.getDateofdeparture()).from(busRequest.getFrom()).to(busRequest.getTo())
+				.noOfSeats(busRequest.getNoOfSeats()).build();
 	}
 
 	private BusResponse mapToBusResponse(Bus bus) {
-		return BusResponse.builder().id(bus.getId()).name(bus.getName()).date_Of_Departure(bus.getDate_Of_Departure())
-				.bus_No(bus.getBus_No()).from_Location(bus.getFrom_Location()).to_Location(bus.getTo_Location())
-				.no_Seats(bus.getNo_Seats()).build();
+		return BusResponse.builder().id(bus.getId()).name(bus.getName()).dateofdeparture(bus.getDateofdeparture())
+				.from(bus.getFrom()).to(bus.getTo()).noOfSeats(bus.getNoOfSeats()).busNumber(bus.getBusNumber())
+				.build();
 	}
 }

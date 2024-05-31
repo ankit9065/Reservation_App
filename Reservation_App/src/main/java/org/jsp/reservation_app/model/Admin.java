@@ -35,7 +35,11 @@ public class Admin {
 	@Column(nullable = false)
 	private String password;
 	
+	private String token;
+	@Column(nullable = false)
+	private String status;
+	
 	@OneToMany(mappedBy = "admin")
 	@JsonIgnore
-	private List<Bus> bus;
+	private List<Bus> buses;
 }
