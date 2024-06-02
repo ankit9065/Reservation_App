@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,9 +19,9 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Bus {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +29,7 @@ public class Bus {
 	@Column(nullable = false)
 	private String name;
 	@Column(nullable = false, name = "date_Of_departure")
-	private LocalDateTime dateofdeparture;
+	private String dateofdeparture;
 	@Column(nullable = false, name = "bus_number")
 	private String busNumber;
 	@Column(nullable = false, name = "from_location")
@@ -37,7 +38,7 @@ public class Bus {
 	private String to;
 	@Column(nullable = false, name = "number_of_seats")
 	private int noOfSeats;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "admin_id")
 	@JsonIgnore
 	private Admin admin;

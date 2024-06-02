@@ -3,7 +3,7 @@ import React from 'react'
 const PageNotFound = () => {
   return (
     <div>
-      <marquee behavior="" direction=""></marquee>
+      <marquee behavior="" direction="">Beta glat ja rhe hoo shi jgh anguli kr ja k </marquee>
     </div>
   )
 }

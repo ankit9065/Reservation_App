@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class BusResponse {
 	private int id;
 	private String name;
-	private LocalDateTime dateofdeparture;
+	private String dateofdeparture;
 	private String busNumber;
 	private String from;
 	private String to;

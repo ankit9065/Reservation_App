@@ -8,7 +8,7 @@ function Dropdown1() {
       </Dropdown.Toggle>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Add Bus</Dropdown.Item>
+        <Dropdown.Item href="/adminHomePage/addbus">Add Bus</Dropdown.Item>
         <Dropdown.Item href="#/action-2">Buses List</Dropdown.Item>
         <Dropdown.Item href="#/action-3">Edit Profile</Dropdown.Item>
         <Dropdown.Item href="#/action-4">Logout</Dropdown.Item>
