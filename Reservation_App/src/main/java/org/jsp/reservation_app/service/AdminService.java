@@ -4,43 +4,45 @@ import java.util.Optional;
 import org.jsp.reservation_app.dao.AdminDao;
 import org.jsp.reservation_app.dto.AdminRequest;
 import org.jsp.reservation_app.dto.AdminResponse;
+import org.jsp.reservation_app.dto.EmailConfiguration;
 import org.jsp.reservation_app.dto.ResponseStructure;
 import org.jsp.reservation_app.exception.AdminNotFoundException;
 import org.jsp.reservation_app.model.Admin;
+import org.jsp.reservation_app.util.AccountStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpServletRequest;
-import net.bytebuddy.utility.RandomString;
 
 @Service
 public class AdminService {
+
 	@Autowired
 	private AdminDao adminDao;
-	
+
 	@Autowired
 	private ReservationApiMailService mailService;
 
-	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest, 
+	@Autowired
+	private LinkGeneratorService linkGeneratorService;
+
+	@Autowired
+	private EmailConfiguration emailConfiguration;
+
+	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(AdminRequest adminRequest,
 			HttpServletRequest request) {
-		String siteUrl = request.getRequestURL().toString();
-		String path = request.getServletPath();
-		String activation_link = siteUrl.replaceAll(path, "/api/admins/activate	");
-		
 		ResponseStructure<AdminResponse> structure = new ResponseStructure<>();
-		
-		String token = RandomString.make(45);
-		activation_link += "?token=" + token;
-		System.out.println(activation_link);
-		
 		Admin admin = mapToAdmin(adminRequest);
-		admin.setToken(token);
-		admin.setStatus("In_Active");
-		
-		adminDao.saveAdmin(admin);
-		
-		structure.setMessage(mailService.sendMail(admin.getEmail(), activation_link));
+		admin.setStatus(AccountStatus.IN_ACTIVE.toString());
+		admin = adminDao.saveAdmin(admin);
+		String activation_link = linkGeneratorService.getActivationLink(admin, request);
+		emailConfiguration.setSubject("Activate Your Account");
+		emailConfiguration.setText(
+				"Dear Admin please activate your account by clicking on the following link:" + activation_link);
+		emailConfiguration.setToAddress(admin.getEmail());
+
+		structure.setMessage(mailService.sendMail(emailConfiguration));
 		structure.setData(mapToAdminResponse(admin));
 		structure.setStatusCode(HttpStatus.CREATED.value());
 
@@ -62,14 +64,14 @@ public class AdminService {
 
 		if (rec.isPresent()) {
 			Admin dbAdmin = rec.get();
-			
+
 			dbAdmin.setEmail(adminRequest.getEmail());
 			dbAdmin.setGst_no(adminRequest.getGst_no());
 			dbAdmin.setName(adminRequest.getName());
 			dbAdmin.setPhone(adminRequest.getPhone());
 			dbAdmin.setPassword(adminRequest.getPassword());
 			dbAdmin.setTravels_name(adminRequest.getTravles_name());
-			
+
 			structure.setData(mapToAdminResponse(adminDao.saveAdmin(dbAdmin)));
 			structure.setMessage("Admin Details updated Successfully..!!");
 			structure.setStatusCode(HttpStatus.ACCEPTED.value());
@@ -113,12 +115,14 @@ public class AdminService {
 		ResponseStructure<AdminResponse> structure = new ResponseStructure<>();
 		Optional<Admin> db = adminDao.verify(email, password);
 
-		if (db.isPresent()) {
-
-			structure.setData(mapToAdminResponse(db.get()));
-			structure.setMessage("Verification done by email & password Succesfull...");
+		if(db.isPresent()) {
+			Admin admin = db.get();
+			if(admin.getStatus().equals(AccountStatus.IN_ACTIVE.toString()))
+				throw new IllegalStateException("Please Activate your account before you signin");
+			
+			structure.setData(mapToAdminResponse(admin));
+			structure.setMessage("Verification Successfully Done...!!!");
 			structure.setStatusCode(HttpStatus.OK.value());
-
 			return ResponseEntity.status(HttpStatus.OK).body(structure);
 		}
 		throw new AdminNotFoundException("Invalid Email Id or Password");
@@ -151,17 +155,17 @@ public class AdminService {
 				.id(admin.getId()).phone(admin.getPhone()).password(admin.getPassword())
 				.travels_name(admin.getTravels_name()).build();
 	}
-	
+
 	public String activate(String token) {
 		Optional<Admin> rec = adminDao.findByToken(token);
-		
-		if(rec.isEmpty()) {
+
+		if (rec.isEmpty()) {
 			throw new AdminNotFoundException("Invalid token");
 		}
 		Admin db = rec.get();
-		db.setStatus("Activated");
+		db.setStatus("Active");
 		db.setToken(null);
 		adminDao.saveAdmin(db);
 		return "Your Account has been activated";
-	}	
+	}
 }

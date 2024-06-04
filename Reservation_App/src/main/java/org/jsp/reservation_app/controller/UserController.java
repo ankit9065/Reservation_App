@@ -6,6 +6,7 @@ import org.jsp.reservation_app.dto.UserResponse;
 import org.jsp.reservation_app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletRequest;
+
+@CrossOrigin
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -23,8 +27,9 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping
-	public ResponseEntity<ResponseStructure<UserResponse>> saveUser(@RequestBody UserRequest userRequest) {
-		return userService.saveUser(userRequest);
+	public ResponseEntity<ResponseStructure<UserResponse>> saveUser(@RequestBody UserRequest userRequest,
+			HttpServletRequest request) {
+		return userService.saveUser(userRequest, request);
 	}
 
 	@PutMapping("/{id}")
@@ -33,7 +38,7 @@ public class UserController {
 		return userService.update(userRequest, id);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<ResponseStructure<UserResponse>> findUser(@PathVariable int id) {
 		return userService.findById(id);
 	}
@@ -53,5 +58,10 @@ public class UserController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ResponseStructure<String>> delete(@PathVariable int id) {
 		return userService.delete(id);
+	}
+	
+	@GetMapping("/activate")
+	public String activate(@RequestParam String token) {
+		return userService.activate(token);
 	}
 }

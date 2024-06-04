@@ -62,4 +62,12 @@ public class ReservationApiExceptionHandler{
 		}
 		return errors;
 	}
+	
+	public ResponseStructure<String> handle(IllegalStateException exception){
+		ResponseStructure<String> structure = new ResponseStructure<>();
+		structure.setData("Can't SignIn");
+		structure.setMessage(exception.getMessage());
+		structure.setStatusCode(HttpStatus.UNAUTHORIZED.value());
+		return structure;
+	}
 }

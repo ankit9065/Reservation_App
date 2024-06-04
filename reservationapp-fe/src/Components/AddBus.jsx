@@ -15,9 +15,13 @@ let BusData={
     name, dateofdeparture, busNumber, from, to, noOfSeats
 }
 
+let admin = JSON.parse(localStorage.getItem("Admin"))
+console.log(admin);
+console.log(typeof(admin));
+
 function addBusData(e){
     e.preventDefault()
-    axios.post('http://localhost:8080/api//api/buses', BusData)
+    axios.post(`http://localhost:8080/api/buses/${admin.id}`, BusData)
     .then((res)=>{
         console.log(res);
         alert('Bus Details have been added Successfully')
@@ -49,7 +53,7 @@ function addBusData(e){
                 <label htmlFor="">No Of Seats</label>
                 <input type="number" required placeholder='Enter the bus noOfSeats' value={noOfSeats} onChange={(e) => { setnoOfSeats(e.target.value) }} />
 
-                <button className='btn btn-info'>Add Bus</button>
+                <button>Add Bus</button>
             </form>
 
         </div>

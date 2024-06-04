@@ -1,5 +1,6 @@
 package org.jsp.reservation_app.service;
 
+import java.util.List;
 import java.util.Optional;
 import org.jsp.reservation_app.dao.AdminDao;
 import org.jsp.reservation_app.dao.BusDao;
@@ -26,15 +27,14 @@ public class BusService {
 
 	public ResponseEntity<ResponseStructure<BusResponse>> saveBus(BusRequest busRequest, int admin_id) {
 		Optional<Admin> rec = adminDao.findById(admin_id);
-
+		ResponseStructure<BusResponse> structure = new ResponseStructure<>();
 		if (rec.isPresent()) {
-			Admin admin = rec.get();
-			busRequest.setAdmin(admin);
-			admin.getBuses().add(mapToBus(busRequest));
-
-			ResponseStructure<BusResponse> structure = new ResponseStructure<>();
-			structure.setData(mapToBusResponse(busDao.saveBus(mapToBus(busRequest))));
-			adminDao.saveAdmin(admin);
+			Bus bus = mapToBus(busRequest);
+			bus.setAdmin(rec.get());
+			rec.get().getBuses().add(bus);
+			adminDao.saveAdmin(rec.get());
+			busDao.saveBus(bus);
+			structure.setData(mapToBusResponse(bus));
 			structure.setMessage("Bus details Successfully saved...");
 			structure.setStatusCode(HttpStatus.CREATED.value());
 
@@ -97,6 +97,26 @@ public class BusService {
 		}
 		throw new BusNotFoundException("Invalid Bus Id");
 	}
+	
+//	public ResponseEntity<ResponseStructure<List<Bus>>> findBuses(String from, String to, String dateOfDeparture) {
+//		ResponseStructure<List<Bus>> structure = new ResponseStructure<>();
+//		List<Bus> buses = busDao.findBuses(from, to, dateOfDeparture);
+//		if (buses.isEmpty())
+//			throw new BusNotFoundException("No Buses for entered route on this Date");
+//		structure.setData(buses);
+//		structure.setMessage("List of Buses for entered route on this Date");
+//		structure.setStatusCode(HttpStatus.OK.value());
+//		return ResponseEntity.status(HttpStatus.OK).body(structure);
+//	}
+
+	public ResponseEntity<ResponseStructure<List<Bus>>> findAll() {
+		ResponseStructure<List<Bus>> structure = new ResponseStructure<>();
+		structure.setData(busDao.findAll());
+		structure.setMessage("List of All Buses");
+		structure.setStatusCode(HttpStatus.OK.value());
+		return ResponseEntity.status(HttpStatus.OK).body(structure);
+	}
+
 
 	private Bus mapToBus(BusRequest busRequest) {
 		return Bus.builder().name(busRequest.getName()).busNumber(busRequest.getBusNumber())

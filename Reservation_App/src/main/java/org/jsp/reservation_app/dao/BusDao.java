@@ -1,5 +1,6 @@
 package org.jsp.reservation_app.dao;
 
+import java.util.List;
 import java.util.Optional;
 import org.jsp.reservation_app.model.Bus;
 import org.jsp.reservation_app.repository.BusRepository;
@@ -38,4 +39,13 @@ public class BusDao {
 	public void deleteBus(int id) {
 		busRepository.deleteById(id);
 	}
+	
+	public List<Bus> findAll() {
+		return busRepository.findAll();
+	}
+
+//	public List<Bus> findBuses(String from, String to, String dateOfDeparture) {
+//		return busRepository.findBuses(from, to, dateOfDeparture);
+//	}
+
 }

@@ -1,6 +1,5 @@
 package org.jsp.reservation_app.dto;
 
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

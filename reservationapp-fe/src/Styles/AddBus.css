@@ -6,21 +6,21 @@
     align-items: center;
   }
   
-  form {
-    background-color: rgba(255, 255, 255, 0.9);
+  .AddBus form {
+    background-color: rgba(90, 87, 87, 0.9);
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 400px;
   }
   
-  label {
+  .AddBus label {
     display: block;
     margin-bottom: 5px;
     font-family: cursive;
   }
   
-  input {
+  .AddBus input {
     width: calc(100% - 20px);
     padding: 8px 10px;
     margin-bottom: 15px;
@@ -29,18 +29,19 @@
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   }
   
-  button {
-    width: 100%;
+  .AddBus button {
+    width: 95%;
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: #3494e6;
+    background-color: #176fbb;
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
   
-  button:hover {
-    background-color: #2a82c9;
+  .AddBus button:hover {
+    background-color: #f6f8fa;
+    color: black;
   }
   

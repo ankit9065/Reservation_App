@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import AdminNavbar from './AdminNavbar'
 import AdminDashboard from './AdminDashboard'
 import AddBus from './AddBus'
+import ViewBus from './ViewBus'
 
 const AdminHomePage = () => {
   return (
@@ -11,6 +12,7 @@ const AdminHomePage = () => {
       <Routes>
         <Route path='/' element={<AdminDashboard/>}/>
         <Route path='/addbus' element={<AddBus/>}/>
+        <Route path='/viewbus' element={<ViewBus/>}/>
       </Routes>
     </div>
   )

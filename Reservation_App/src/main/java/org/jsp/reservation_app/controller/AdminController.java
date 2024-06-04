@@ -29,7 +29,8 @@ public class AdminController {
 	private AdminService adminService;
 
 	@PostMapping
-	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(@Valid @RequestBody AdminRequest adminRequest, HttpServletRequest request) {
+	public ResponseEntity<ResponseStructure<AdminResponse>> saveAdmin(@Valid @RequestBody AdminRequest adminRequest,
+			HttpServletRequest request) {
 		return adminService.saveAdmin(adminRequest, request);
 	}
 
@@ -39,7 +40,7 @@ public class AdminController {
 		return adminService.update(adminRequest, id);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<ResponseStructure<AdminResponse>> findAdmin(@PathVariable int id) {
 		return adminService.findById(id);
 	}
@@ -60,7 +61,7 @@ public class AdminController {
 	public ResponseEntity<ResponseStructure<String>> delete(@PathVariable int id) {
 		return adminService.delete(id);
 	}
-	
+
 	@GetMapping("/activate")
 	public String activate(@RequestParam String token) {
 		return adminService.activate(token);

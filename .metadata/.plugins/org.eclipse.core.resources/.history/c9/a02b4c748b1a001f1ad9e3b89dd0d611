@@ -1,5 +1,0 @@
-package org.jsp.reservation_app.dao;
-
-public class BusDao {
-
-}
