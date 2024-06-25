@@ -2,8 +2,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 function Dropdown1() {
   return (
-    <>
-      <Dropdown>
+    <div className="dropdown-container">
+      <Dropdown className="dropdown-item">
         <Dropdown.Toggle variant="success" id="dropdown-Bus">
           Bus
         </Dropdown.Toggle>
@@ -11,13 +11,11 @@ function Dropdown1() {
         <Dropdown.Menu>
           <Dropdown.Item href="/adminHomePage/addbus">Add Bus</Dropdown.Item>
           <Dropdown.Item href="/adminHomePage/viewbus">Buses List</Dropdown.Item>
-          <Dropdown.Item href="/adminHomePage/editbus">Edit Bus</Dropdown.Item>
-          <Dropdown.Item href="/adminHomePage/deletebus">Delete Bus</Dropdown.Item>
           <Dropdown.Item href="#/action-5">Logout</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 
-      <Dropdown>
+      <Dropdown className="dropdown-item">
         <Dropdown.Toggle variant="warning" id="dropdown-Admin">
           Admin
         </Dropdown.Toggle>
@@ -29,7 +27,7 @@ function Dropdown1() {
           <Dropdown.Item href="/adminHomePage/deleteadmin">Delete Admin</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-    </>
+    </div>
   );
 }
 

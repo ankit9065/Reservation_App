@@ -1,67 +1,58 @@
 .viewBus {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-  }
-  
-  .bus_Details {
-    width: calc(33.33% - 20px); 
-    margin: 10px;
-    padding: 15px;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
-  
-  .bus_Details:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .bus_Details h3 {
-    margin: 0 0 10px; 
-    font-size: 24px; 
-    color: #333;
-    font-family: cursive; 
-  }
-  
-  .bus_Details i,
-  .bus_Details p,
-  .bus_Details span,
-  .bus_Details button {
-    display: inline-block; 
-    font-size: 20px; 
-    font-weight: bold;
-    color: #666;
-    padding-left: 50px;
-    font-family: 'Courier New', Courier, monospace;
-  }
-  
-  .bus_Details span {
-    margin-right: 50px; 
-  }
-  
-  .bus_Details button {
-    margin-top: px; 
-    padding: 6px 13px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .bus_Details button:hover {
-    background-color: #0056b3;
-  }
-  
-  .viewBus {
-    background: linear-gradient(135deg, #ff8a00, #ff007d, #ff00f1);
-  }
-  
-  .viewBus .bus_Details {
-    width: 100%; 
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  background: linear-gradient(165deg, #ff8a00, #ff007d, #ff00f1);
+}
+
+.bus_Details {
+  width: calc(33.33% - 20px);
+  margin: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.bus_Details:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.bus_Details h3 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  color: #333;
+  font-family: cursive;
+}
+
+.bus_Details i,
+.bus_Details p,
+.bus_Details button {
+  display: inline-block;
+  font-size: 20px;
+  font-weight: bold;
+  color: #666;
+  padding-left: 30px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.bus_Details button {
+  margin-left: 25px;
+  padding: 6px 13px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.bus_Details button:hover {
+  background-color: #0056b3;
+}
+
+.viewBus .bus_Details {
+  width: 100%;
+}

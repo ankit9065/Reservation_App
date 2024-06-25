@@ -7,7 +7,7 @@ const AdminNavbar = () => {
     <div className='adminNavbar'>
       <div className='logo'>
         <h1>
-            <i>yatra</i><sup><i>.in</i></sup>
+            <i>safar</i><sup><i> .in</i></sup>
         </h1>
       </div>
       <div className='options'>

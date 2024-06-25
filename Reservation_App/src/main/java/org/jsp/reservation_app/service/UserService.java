@@ -8,7 +8,6 @@ import org.jsp.reservation_app.dto.UserRequest;
 import org.jsp.reservation_app.dto.UserResponse;
 import org.jsp.reservation_app.exception.AdminNotFoundException;
 import org.jsp.reservation_app.exception.UserNotFoundException;
-import org.jsp.reservation_app.model.Admin;
 import org.jsp.reservation_app.model.User;
 import org.jsp.reservation_app.util.AccountStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +38,11 @@ public class UserService {
 		User user = mapToUser(userRequest);
 		user.setStatus(AccountStatus.IN_ACTIVE.toString());
 		user = userDao.saveUser(user);
-		
-		String activation_link = linkGeneratorService.getUserActivationLink(user, request);
+
+		String activation_link = linkGeneratorService.getActivationLink(user, request);
 		emailConfiguration.setSubject("Activate Your Account..!!");
-		emailConfiguration.setText("Dear User please activate your account by clicking on the following link:" + activation_link);
+		emailConfiguration
+				.setText("Dear User please activate your account by clicking on the following link:" + activation_link);
 		emailConfiguration.setToAddress(user.getEmail());
 		structure.setMessage(mailService.sendMail(emailConfiguration));
 		structure.setData(mapToUserResponse(user));
@@ -116,11 +116,11 @@ public class UserService {
 		ResponseStructure<UserResponse> structure = new ResponseStructure<>();
 		Optional<User> db = userDao.verify(email, password);
 
-		if(db.isPresent()) {
+		if (db.isPresent()) {
 			User user = db.get();
-			if(user.getStatus().equals(AccountStatus.IN_ACTIVE.toString()))
+			if (user.getStatus().equals(AccountStatus.IN_ACTIVE.toString()))
 				throw new IllegalStateException("Please Activate your account before you SignIn");
-			
+
 			structure.setData(mapToUserResponse(user));
 			structure.setMessage("Verification Successfully Done...!!!");
 			structure.setStatusCode(HttpStatus.OK.value());
@@ -155,17 +155,41 @@ public class UserService {
 		return UserResponse.builder().id(user.getId()).name(user.getName()).age(user.getAge()).gender(user.getGender())
 				.email(user.getEmail()).phone(user.getPhone()).password(user.getPassword()).build();
 	}
-	
+
 	public String activate(String token) {
 		Optional<User> rec = userDao.findByToken(token);
 
-		if (rec.isEmpty()) {
+		if (rec.isEmpty())
 			throw new AdminNotFoundException("Invalid token");
-		}
 		User db = rec.get();
 		db.setStatus("Active");
 		db.setToken(null);
 		userDao.saveUser(db);
 		return "Your Account has been activated";
+	}
+	
+	public String forgotPassword(String email, HttpServletRequest request) {
+		Optional<User> rec = userDao.findByEmail(email);
+
+		if (rec.isEmpty())
+			throw new UserNotFoundException("Invalid Email Id");
+		User user = rec.get();
+		String resetPasswordLink = linkGeneratorService.getResetPasswordLink(user, request);
+		emailConfiguration.setToAddress(email);
+		emailConfiguration.setText("Please Click on the following link to reset your Password :" + resetPasswordLink);
+		emailConfiguration.setSubject("RESET YOUR PASSWORD");
+		mailService.sendMail(emailConfiguration);
+		return "reset password link has been sent to entered email Id";
+	}
+
+	public UserResponse verifyLink(String token) {
+		Optional<User> rec = userDao.findByToken(token);
+
+		if (rec.isEmpty())
+			throw new UserNotFoundException("Link has been expired or it is Invalid");
+		User db = rec.get();
+		db.setToken(null);
+		userDao.saveUser(db);
+		return mapToUserResponse(db);
 	}
 }

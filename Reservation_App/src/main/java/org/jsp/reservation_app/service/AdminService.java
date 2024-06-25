@@ -144,18 +144,6 @@ public class AdminService {
 		throw new AdminNotFoundException("Cannot delete Admin as Id is Invalid");
 	}
 
-	private Admin mapToAdmin(AdminRequest adminRequest) {
-		return Admin.builder().name(adminRequest.getName()).phone(adminRequest.getPhone())
-				.gst_no(adminRequest.getGst_no()).travels_name(adminRequest.getTravles_name())
-				.email(adminRequest.getEmail()).password(adminRequest.getPassword()).build();
-	}
-
-	private AdminResponse mapToAdminResponse(Admin admin) {
-		return AdminResponse.builder().name(admin.getName()).email(admin.getEmail()).gst_no(admin.getGst_no())
-				.id(admin.getId()).phone(admin.getPhone()).password(admin.getPassword())
-				.travels_name(admin.getTravels_name()).build();
-	}
-
 	public String activate(String token) {
 		Optional<Admin> rec = adminDao.findByToken(token);
 
@@ -167,5 +155,41 @@ public class AdminService {
 		db.setToken(null);
 		adminDao.saveAdmin(db);
 		return "Your Account has been activated";
+	}
+	
+	public String forgotPassword(String email, HttpServletRequest request) {
+		Optional<Admin> recAdmin = adminDao.findByEmail(email);
+		if(recAdmin.isEmpty())
+			throw new AdminNotFoundException("Invalid Email I'd");
+		Admin admin = recAdmin.get();
+		String resetPasswordLink = linkGeneratorService.getResetPasswordLink(admin, request);
+		emailConfiguration.setToAddress(email);
+		emailConfiguration.setText("Please click on the link to reset your password " + resetPasswordLink);
+		emailConfiguration.setSubject("Reset Your Password");
+		mailService.sendMail(emailConfiguration);
+		return "Reset password link has been sent to mail I'd";
+	}
+	
+	public AdminResponse verifyLink(String token) {
+		Optional<Admin> recAdmin = adminDao.findByToken(token);
+		if(recAdmin.isEmpty())
+			throw new AdminNotFoundException("Link has been expired or it is Invalid");
+		Admin dbAdmin = recAdmin.get();
+		dbAdmin.setToken(null);
+		adminDao.saveAdmin(dbAdmin);
+		return mapToAdminResponse(dbAdmin);
+			
+	}
+	
+	private Admin mapToAdmin(AdminRequest adminRequest) {
+		return Admin.builder().name(adminRequest.getName()).phone(adminRequest.getPhone())
+				.gst_no(adminRequest.getGst_no()).travels_name(adminRequest.getTravles_name())
+				.email(adminRequest.getEmail()).password(adminRequest.getPassword()).build();
+	}
+
+	private AdminResponse mapToAdminResponse(Admin admin) {
+		return AdminResponse.builder().name(admin.getName()).email(admin.getEmail()).gst_no(admin.getGst_no())
+				.id(admin.getId()).phone(admin.getPhone()).password(admin.getPassword())
+				.travels_name(admin.getTravels_name()).build();
 	}
 }

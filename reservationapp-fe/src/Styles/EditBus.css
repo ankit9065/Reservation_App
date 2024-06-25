@@ -1,0 +1,47 @@
+.updateBus {
+    background: linear-gradient(135deg, #3494e6, #ec6ead, #7c53a6);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .updateBus form {
+    background-color: rgba(90, 87, 87, 0.9);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+  }
+  
+  .updateBus label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: cursive;
+  }
+  
+  .updateBus input {
+    width: calc(100% - 20px);
+    padding: 8px 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  
+  .updateBus button {
+    width: 95%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #176fbb;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .updateBus button:hover {
+    background-color: #f6f8fa;
+    color: black;
+  }
+  

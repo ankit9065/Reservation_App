@@ -7,6 +7,7 @@ import AdminSignUp from './Components/AdminSignUp';
 import UserSignUp from './Components/UserSignUp';
 import AdminHomePage from './Components/AdminHomePage';
 import PageNotFound from './Components/PageNotFound';
+import ResetPassword from './Components/ResetPassword';
 
 function App(){
   return(
@@ -20,6 +21,7 @@ function App(){
         <Route path='/adminSignUp' element={<AdminSignUp/>} />
         <Route path='/userSignUp' element={<UserSignUp/>}/>
         <Route path='/adminHomePage/*' element={<AdminHomePage/>}/>
+        <Route path='/reset-password' element={<ResetPassword/>}/>
       </Routes>
       </BrowserRouter>
     </div>

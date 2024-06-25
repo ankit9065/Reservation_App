@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import jakarta.validation.ConstraintViolationException;
+
 
 @RestControllerAdvice
 public class ReservationApiExceptionHandler{
@@ -25,12 +27,6 @@ public class ReservationApiExceptionHandler{
 		structure.setStatusCode(HttpStatus.NOT_FOUND.value());
 		return ResponseEntity.status(HttpStatus.OK).body(structure);
 	}
-	
-//	@ExceptionHandler({ConstraintViolationException.class})
-//	@ResponseStatus(HttpStatus.BAD_REQUEST)
-//	public String handleConstraintViolationException(ConstraintViolationException ex) {
-//		return ex.getErrorMessage() + " " + ex.getCause();
-//	}
 	
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<ResponseStructure<String>> handleUNFE(UserNotFoundException exception) {
@@ -63,11 +59,23 @@ public class ReservationApiExceptionHandler{
 		return errors;
 	}
 	
+	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+	@ExceptionHandler(IllegalStateException.class)
 	public ResponseStructure<String> handle(IllegalStateException exception){
 		ResponseStructure<String> structure = new ResponseStructure<>();
 		structure.setData("Can't SignIn");
 		structure.setMessage(exception.getMessage());
 		structure.setStatusCode(HttpStatus.UNAUTHORIZED.value());
+		return structure;
+	}
+	
+	@ResponseStatus(value = HttpStatus.NOT_ACCEPTABLE)
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseStructure<String> handle(IllegalArgumentException exception) {
+		ResponseStructure<String> structure = new ResponseStructure<>();
+		structure.setData("Cannot Complete the Action");
+		structure.setMessage(exception.getMessage());
+		structure.setStatusCode(HttpStatus.NOT_ACCEPTABLE.value());
 		return structure;
 	}
 }

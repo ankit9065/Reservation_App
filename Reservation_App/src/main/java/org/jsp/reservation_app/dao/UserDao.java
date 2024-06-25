@@ -34,4 +34,8 @@ public class UserDao {
 	public Optional<User> findByToken(String token){
 		return userRepository.findByToken(token);
 	}
+	
+	public Optional<User> findByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
 }

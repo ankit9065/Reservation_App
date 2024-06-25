@@ -1,5 +1,7 @@
 package org.jsp.reservation_app.controller;
 
+import java.io.IOException;
+
 import org.jsp.reservation_app.dto.ResponseStructure;
 import org.jsp.reservation_app.dto.UserRequest;
 import org.jsp.reservation_app.dto.UserResponse;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @CrossOrigin
 @RestController
@@ -44,13 +47,13 @@ public class UserController {
 	}
 
 	@PostMapping("/verify-by-phone")
-	public ResponseEntity<ResponseStructure<UserResponse>> verifyByPhone(@RequestParam long phone,
+	public ResponseEntity<ResponseStructure<UserResponse>> verify(@RequestParam long phone,
 			@RequestParam String password) {
 		return userService.verify(phone, password);
 	}
 
 	@PostMapping("/verify-by-email")
-	public ResponseEntity<ResponseStructure<UserResponse>> verifyByEmail(@RequestParam String email,
+	public ResponseEntity<ResponseStructure<UserResponse>> verify(@RequestParam String email,
 			@RequestParam String password) {
 		return userService.verify(email, password);
 	}
@@ -63,5 +66,22 @@ public class UserController {
 	@GetMapping("/activate")
 	public String activate(@RequestParam String token) {
 		return userService.activate(token);
+	}
+	
+	@PostMapping("/forgot-password")
+	public String forgotPassword(@RequestParam String email, HttpServletRequest request) {
+		return userService.forgotPassword(email, request);
+	}
+
+	@GetMapping("/verify-link")
+	public void verifyResetPasswordLink(@RequestParam String token, HttpServletResponse response) {
+		UserResponse userResponse = userService.verifyLink(token);
+
+		if (userResponse != null)
+			try {
+				response.sendRedirect("http://localhost:3000/reset-password");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	}
 }

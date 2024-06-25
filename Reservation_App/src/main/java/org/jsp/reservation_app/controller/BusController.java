@@ -1,5 +1,7 @@
 package org.jsp.reservation_app.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.jsp.reservation_app.dto.BusRequest;
 import org.jsp.reservation_app.dto.BusResponse;
@@ -44,7 +46,7 @@ public class BusController {
 		return busService.findById(id);
 	}
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{admin_id}/{id}")
 	public ResponseEntity<ResponseStructure<BusResponse>> deleteBus(@PathVariable int id) {
 		return busService.delete(id);
 	}
@@ -54,9 +56,19 @@ public class BusController {
 		return busService.findAll();
 	}
 
-//	@GetMapping("/find")
-//	public ResponseEntity<ResponseStructure<List<Bus>>> findBuses(@RequestParam String from, @RequestParam String to,
-//			@RequestParam String dateOfDeparture) {
-//		return busService.findBuses(from, to, dateOfDeparture);
+	@GetMapping("/find")
+	public ResponseEntity<ResponseStructure<List<Bus>>> findBuses(@RequestParam String from, @RequestParam String to,
+			@RequestParam LocalDate dateofdeparture) {
+		return busService.findBuses(from, to, dateofdeparture);
+	}
+	
+	@GetMapping("/find/{admin_id}")
+	public ResponseEntity<ResponseStructure<List<Bus>>> findByAdminId(@PathVariable int admin_id) {
+		return busService.findByAdminId(admin_id);
+	}
+	
+//	@GetMapping("/activate")
+//	public String activate(@RequestParam String token) {
+//		return busService.activate(token);
 //	}
 }
